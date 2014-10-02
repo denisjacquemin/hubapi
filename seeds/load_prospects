@@ -1,0 +1,27 @@
+#!/usr/bin/ruby
+
+require 'rest_client'
+
+p RestClient.get 'http://localhost:8000/api/properties'
+
+
+10000.times {
+
+  property = {
+
+      ref_agence:   JSON.parse(File.read('seeds/data/title.json')).sample,
+      description:  String,
+      budget_min:   Number,
+      budget_max:   Number,
+      bedroomcount: JSON.parse(File.read('seeds/data/common/bedroomcount.json')).sample.to_i,
+      surface:      Number,
+      location: {
+          lat: JSON.parse(File.read('seeds/data/prospects/lat.json')).sample,
+          lon: JSON.parse(File.read('seeds/data/prospects/lon.json')).sample
+      },
+      agencyId: JSON.parse(File.read('seeds/data/common/agencyid.json')).sample.to_i,
+
+  }
+
+  RestClient.post( 'http://localhost:8000/api/properties', property)
+}
