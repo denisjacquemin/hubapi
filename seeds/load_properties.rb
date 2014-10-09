@@ -19,7 +19,8 @@ p RestClient.get 'http://localhost:8000/api/properties'
         lat: JSON.parse(File.read('seeds/data/properties/lat.json')).sample,
         lon: JSON.parse(File.read('seeds/data/properties/lon.json')).sample
       },
-      agencyId: JSON.parse(File.read('seeds/data/common/agencyid.json')).sample.to_i
+      agencyId: JSON.parse(File.read('seeds/data/common/agencyid.json')).sample.to_i,
+      createdAt: '2014-10-1'
   }
 
   RestClient.post( 'http://localhost:8000/api/properties', property)
