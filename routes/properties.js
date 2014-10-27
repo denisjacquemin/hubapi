@@ -2,7 +2,7 @@ var Property = require('../models/property');
 var express = require('express');
 var router = express.Router();
 
-
+// list
 router.route('/properties').get(function(req, res) {
     Property.find(function(err, properties) {
         if (err) {
@@ -13,9 +13,12 @@ router.route('/properties').get(function(req, res) {
     });
 });
 
-
+// Create
 router.route('/properties').post(function(req, res) {
     var property = new Property(req.body);
+
+    property.createdAt = new Date();  // set createdAt to current datetime
+    property.updatedAt = new Date();
 
     property.save(function(err) {
         if (err) {
@@ -26,25 +29,45 @@ router.route('/properties').post(function(req, res) {
     });
 });
 
+// Update
 router.route('/properties/:id').put(function(req,res){
-    Property.findOne({ _id: req.params.id }, function(err, property) {
-        if (err) {
-            return res.send(err);
-        }
+    var property = req.body;
+    property.updatedAt = new Date();
 
-        for (prop in req.body) {
-            property[prop] = req.body[prop];
-        }
+    console.log(req.params.id);
+    console.log(property);
 
-        // save the movie
-        property.save(function(err) {
+    Property.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        function(err) {
             if (err) {
-                return res.send(err);
+                return res.json(err);
             }
 
             res.json({ message: 'Property updated!' });
-        });
-    });
+        }
+    );
+    //)
+//
+    //Property.findOne({ _id: req.params.id }, function(err, property) {
+    //    if (err) {
+    //        return res.send(err);
+    //    }
+//
+    //    for (prop in req.body) {
+    //        property[prop] = req.body[prop];
+    //    }
+//
+    //    // save the movie
+    //    property.save(function(err) {
+    //        if (err) {
+    //            return res.send(err);
+    //        }
+//
+    //        res.json({ message: 'Property updated!' });
+    //    });
+    //});
 });
 
 router.route('/properties/:id').get(function(req, res) {

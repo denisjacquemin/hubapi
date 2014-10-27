@@ -5,7 +5,7 @@ require 'rest_client'
 p RestClient.get 'http://localhost:8000/api/properties'
 
 
-10.times {
+1.times {
 
   property = {
 
@@ -19,8 +19,7 @@ p RestClient.get 'http://localhost:8000/api/properties'
         lat: JSON.parse(File.read('seeds/data/properties/lat.json')).sample,
         lon: JSON.parse(File.read('seeds/data/properties/lon.json')).sample
       },
-      agencyId: JSON.parse(File.read('seeds/data/common/agencyid.json')).sample.to_i,
-      createdAt: '2014-10-1'
+      agencyId: JSON.parse(File.read('seeds/data/common/agencyid.json')).sample.to_i
   }
 
   RestClient.post( 'http://localhost:8000/api/properties', property)
