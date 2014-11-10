@@ -12,10 +12,9 @@ var prospectSchema = new Schema({
         lat: Number,
         lon: Number
     },
-    agencyId: Number,
-    createdAt: Date,
-    updatedAt: Date
-
+    agency_id: Number,
+    created_at: Date,
+    updated_at: Date
 });
 
 module.exports = mongoose.model('Prospect', prospectSchema);

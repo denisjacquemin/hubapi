@@ -2,26 +2,28 @@
 
 require 'rest_client'
 
-p RestClient.get 'http://localhost:8000/api/properties'
+p RestClient.get 'http://localhost:8000/api/prospects'
 
 
-10000.times {
+1000.times {
+  budget = JSON.parse(File.read('seeds/data/prospects/budget.json')).sample
 
-  property = {
-
-      ref_agence:   JSON.parse(File.read('seeds/data/title.json')).sample,
-      description:  String,
-      budget_min:   Number,
-      budget_max:   Number,
+  prospect = {
+      ref_agence:   JSON.parse(File.read('seeds/data/prospects/agency_title.json')).sample,
+      description:  JSON.parse(File.read('seeds/data/prospects/description.json')).sample,
+      budget_min:   budget[0].to_i,
+      budget_max:   budget[1].to_i,
       bedroomcount: JSON.parse(File.read('seeds/data/common/bedroomcount.json')).sample.to_i,
-      surface:      Number,
+      surface:      JSON.parse(File.read('seeds/data/common/surface.json')).sample.to_i,
       location: {
           lat: JSON.parse(File.read('seeds/data/prospects/lat.json')).sample,
           lon: JSON.parse(File.read('seeds/data/prospects/lon.json')).sample
       },
-      agencyId: JSON.parse(File.read('seeds/data/common/agencyid.json')).sample.to_i,
+      agency_id: JSON.parse(File.read('seeds/data/common/agencyid.json')).sample.to_i,
 
   }
+  p prospect
 
-  RestClient.post( 'http://localhost:8000/api/properties', property)
+  RestClient.post( 'http://localhost:8000/api/prospects', prospect)
 }
+

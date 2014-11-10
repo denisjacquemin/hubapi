@@ -17,8 +17,8 @@ router.route('/properties').get(function(req, res) {
 router.route('/properties').post(function(req, res) {
     var property = new Property(req.body);
 
-    property.createdAt = new Date();  // set createdAt to current datetime
-    property.updatedAt = new Date();
+    property.created_at = new Date();  // set createdAt to current datetime
+    property.updated_at = new Date();
 
     property.save(function(err) {
         if (err) {
@@ -32,7 +32,7 @@ router.route('/properties').post(function(req, res) {
 // Update
 router.route('/properties/:id').put(function(req,res){
     var property = req.body;
-    property.updatedAt = new Date();
+    property.updated_at = new Date();
 
     console.log(req.params.id);
     console.log(property);
